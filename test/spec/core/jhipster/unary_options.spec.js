@@ -49,7 +49,15 @@ describe('UnaryOptions', () => {
       });
 
       it('should loop over the unary options', () => {
-        expect(result).to.deep.equal(['skipClient', 'skipServer', 'noFluentMethod', 'readOnly', 'filter', 'embedded']);
+        expect(result).to.deep.equal([
+          'skipClient',
+          'skipServer',
+          'noFluentMethod',
+          'readOnly',
+          'filter',
+          'embedded',
+          'secure'
+        ]);
       });
     });
   });

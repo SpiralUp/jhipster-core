@@ -831,6 +831,63 @@ describe('DocumentParser', () => {
           expect(jdlObject.relationships.getOneToOne('OneToOne_A{b}_B').options.jpaDerivedIdentifier).to.be.true;
         });
       });
+      context('with security on entities', () => {
+        let input = null;
+        let jdlObject = null;
+
+        before(() => {
+          input = JDLReader.parseFromFiles(['./test/test_files/complex_secure_jdl.jdl']);
+          jdlObject = DocumentParser.parseFromConfigurationObject({
+            document: input,
+            applicationType: ApplicationTypes.MONOLITH
+          });
+        });
+
+        it('builds a JDLObject', () => {
+          expect(jdlObject).not.to.be.null;
+          expect(jdlObject.entities.Department).to.deep.equal(
+            new JDLEntity({
+              name: 'Department',
+              tableName: 'Department',
+              fields: {
+                name: new JDLField({
+                  name: 'name',
+                  type: FieldTypes.STRING,
+                  validations: {
+                    required: new JDLValidation({ name: Validations.REQUIRED }),
+                    unique: new JDLValidation({ name: Validations.UNIQUE })
+                  }
+                }),
+                description: new JDLField({
+                  name: 'description',
+                  type: FieldTypes.TEXT_BLOB
+                }),
+                advertisement: new JDLField({
+                  name: 'advertisement',
+                  type: FieldTypes.BLOB
+                }),
+                logo: new JDLField({
+                  name: 'logo',
+                  type: FieldTypes.IMAGE_BLOB
+                })
+              },
+              secure: {
+                securityType: 'roles',
+                roles: [
+                  {
+                    role: 'ROLE_ADMIN',
+                    actionList: ['GET', 'PUT', 'POST', 'DELETE']
+                  },
+                  {
+                    role: 'ROLE_USER',
+                    actionList: ['GET']
+                  }
+                ]
+              }
+            })
+          );
+        });
+      });
       context('when parsing entity options in applications', () => {
         context('if the entity list does not contain some entities mentioned in options', () => {
           let parsedContent;
