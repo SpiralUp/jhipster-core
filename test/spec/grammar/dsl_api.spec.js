@@ -126,7 +126,7 @@ describe('JDL DSL API', () => {
       });
 
       it('should provide suggestions', () => {
-        expect(result).to.have.lengthOf(10);
+        expect(result).to.have.lengthOf(11);
         expect(result).to.have.members([
           tokens.AT,
           tokens.APPLICATION,
@@ -137,7 +137,8 @@ describe('JDL DSL API', () => {
           tokens.ENUM,
           tokens.JAVADOC,
           tokens.UNARY_OPTION,
-          tokens.BINARY_OPTION
+          tokens.BINARY_OPTION,
+          tokens.SECURE
         ]);
       });
     });

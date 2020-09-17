@@ -90,4 +90,80 @@ describe('JDLLexer', () => {
       );
     });
   });
+
+  context('when passing a entity security', () => {
+    let lexingResult = null;
+
+    before(() => {
+      const input = `
+   entity JobHistory {
+     startDate ZonedDateTime,
+     endDate ZonedDateTime,
+     language Language
+   }
+   secure JobHistory with roles {
+     admin allows get,post,put,delete 
+     user allows get     
+      }
+   secure JobHistory with customSecurity {
+     admin allows get,post,put,delete 
+     user allows get     
+      }      
+            
+   `;
+      lexingResult = JDLLexer.tokenize(input);
+    });
+
+    it('does not fail', () => {
+      expect(lexingResult.errors).to.be.empty;
+    });
+
+    it('can lex a simple valid JDL text', () => {
+      const tokens = lexingResult.tokens;
+      expect(tokens.length).to.equal(48);
+      expect(tokens[0].image).to.equal('entity');
+      expect(tokens[1].image).to.equal('JobHistory');
+      expect(tokens[2].image).to.equal('{');
+      expect(tokens[3].image).to.equal('startDate');
+      expect(tokens[4].image).to.equal('ZonedDateTime');
+      expect(tokens[5].image).to.equal(',');
+      expect(tokens[6].image).to.equal('endDate');
+      expect(tokens[7].image).to.equal('ZonedDateTime');
+      expect(tokens[8].image).to.equal(',');
+      expect(tokens[9].image).to.equal('language');
+      expect(tokens[10].image).to.equal('Language');
+      expect(tokens[11].image).to.equal('}');
+      expect(tokens[12].image).to.equal('secure');
+      expect(tokens[12].tokenType.name).to.equal('SECURE');
+      expect(tokens[13].image).to.equal('JobHistory');
+      expect(tokens[13].tokenType.name).to.equal('NAME');
+      expect(tokens[14].image).to.equal('with');
+      expect(tokens[14].tokenType.name).to.equal('WITH');
+      expect(tokens[15].image).to.equal('roles');
+      expect(tokens[15].tokenType.name).to.equal('ROLES');
+      expect(tokens[16].image).to.equal('{');
+      expect(tokens[17].image).to.equal('admin');
+      expect(tokens[17].tokenType.name).to.equal('NAME');
+      expect(tokens[18].image).to.equal('allows');
+      expect(tokens[18].tokenType.name).to.equal('ALLOWS');
+      expect(tokens[19].image).to.equal('get');
+      expect(tokens[19].tokenType.name).to.equal('NAME');
+      expect(tokens[20].image).to.equal(',');
+      expect(tokens[21].image).to.equal('post');
+      expect(tokens[21].tokenType.name).to.equal('NAME');
+      expect(tokens[22].image).to.equal(',');
+      expect(tokens[23].image).to.equal('put');
+      expect(tokens[23].tokenType.name).to.equal('NAME');
+      expect(tokens[24].image).to.equal(',');
+      expect(tokens[25].image).to.equal('delete');
+      expect(tokens[25].tokenType.name).to.equal('NAME');
+      expect(tokens[26].image).to.equal('user');
+      expect(tokens[26].tokenType.name).to.equal('NAME');
+      expect(tokens[27].image).to.equal('allows');
+      expect(tokens[27].tokenType.name).to.equal('ALLOWS');
+      expect(tokens[28].image).to.equal('get');
+      expect(tokens[28].tokenType.name).to.equal('NAME');
+      expect(tokens[29].image).to.equal('}');
+    });
+  });
 });

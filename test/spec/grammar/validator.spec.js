@@ -1486,6 +1486,45 @@ describe('JDLSyntaxValidatorVisitor', () => {
         });
       });
     });
+    context('security declaration', () => {
+      context('a valid value', () => {
+        context('with only letters', () => {
+          it('does not report a syntax error', () => {
+            expect(() => {
+              parse(`
+            secure Entitet with roles {
+              Admin allows (Get,Put,Post,Delete)
+              User allows (Get)
+            }
+           `);
+            }).to.not.throw();
+            expect(() => {
+              parse(`
+            secure Entitet2 with privileges {
+              read requirePrivs (ENTITY_ALL_R, ENTITY_OWN_R)
+              change requirePrivs (ENTITY_ALL_CUD)
+            }
+           `);
+            }).to.not.throw();
+            expect(() => {
+              parse(`
+            secure Entitet3 with parentPrivileges {
+                parent Entitet2 field id
+            }
+            `);
+            }).to.not.throw();
+            expect(() => {
+              parse(`
+            secure Entitet4 with relPrivileges {
+                fromEntity Entitet2 field id
+                toEntity Entitet2 field id
+            }
+            `);
+            }).to.not.throw();
+          });
+        });
+      });
+    });
   });
   context('when declaring a deployment', () => {
     context('and using for deploymentType', () => {
