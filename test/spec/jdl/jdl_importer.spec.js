@@ -86,7 +86,10 @@ describe('JDLImporter', () => {
           skipServer: true,
           microserviceName: 'mymicroservice',
           javadoc: '',
-          changelogDate: '20190101000700'
+          changelogDate: '20190101000700',
+          secure: {
+            securityType: 'none'
+          }
         },
         Department: {
           fields: [
@@ -149,7 +152,10 @@ describe('JDLImporter', () => {
           applications: '*',
           microserviceName: 'mymicroservice',
           javadoc: '',
-          changelogDate: '20190101000100'
+          changelogDate: '20190101000100',
+          secure: {
+            securityType: 'none'
+          }
         },
         Employee: {
           fields: [
@@ -235,7 +241,10 @@ describe('JDLImporter', () => {
           applications: '*',
           microserviceName: 'mymicroservice',
           searchEngine: 'elasticsearch',
-          changelogDate: '20190101000400'
+          changelogDate: '20190101000400',
+          secure: {
+            securityType: 'none'
+          }
         },
         Job: {
           fields: [
@@ -298,7 +307,10 @@ describe('JDLImporter', () => {
           applications: '*',
           microserviceName: 'mymicroservice',
           javadoc: '',
-          changelogDate: '20190101000300'
+          changelogDate: '20190101000300',
+          secure: {
+            securityType: 'none'
+          }
         },
         JobHistory: {
           fields: [
@@ -359,7 +371,10 @@ describe('JDLImporter', () => {
           clientRootFolder: '',
           applications: '*',
           microserviceName: 'mymicroservice',
-          changelogDate: '20190101000200'
+          changelogDate: '20190101000200',
+          secure: {
+            securityType: 'none'
+          }
         },
         Location: {
           fields: [
@@ -401,7 +416,10 @@ describe('JDLImporter', () => {
           applications: '*',
           microserviceName: 'mymicroservice',
           javadoc: '',
-          changelogDate: '20190101000500'
+          changelogDate: '20190101000500',
+          secure: {
+            securityType: 'none'
+          }
         },
         Region: {
           fields: [
@@ -432,7 +450,10 @@ describe('JDLImporter', () => {
           applications: '*',
           microserviceName: 'mymicroservice',
           javadoc: '',
-          changelogDate: '20190101000800'
+          changelogDate: '20190101000800',
+          secure: {
+            securityType: 'none'
+          }
         },
         Task: {
           fields: [
@@ -468,7 +489,10 @@ describe('JDLImporter', () => {
           applications: '*',
           microserviceName: 'mymicroservice',
           javadoc: '',
-          changelogDate: '20190101000600'
+          changelogDate: '20190101000600',
+          secure: {
+            securityType: 'none'
+          }
         }
       };
 
@@ -934,7 +958,10 @@ relationship OneToOne {
           jpaMetamodelFiltering: false,
           fluentMethods: true,
           clientRootFolder: '',
-          applications: ['myFirstApp']
+          applications: ['myFirstApp'],
+          secure: {
+            securityType: 'none'
+          }
         },
         {
           name: 'B',
@@ -949,7 +976,10 @@ relationship OneToOne {
           jpaMetamodelFiltering: false,
           fluentMethods: true,
           clientRootFolder: '',
-          applications: ['myFirstApp']
+          applications: ['myFirstApp'],
+          secure: {
+            securityType: 'none'
+          }
         },
         {
           name: 'E',
@@ -965,7 +995,10 @@ relationship OneToOne {
           fluentMethods: true,
           clientRootFolder: '',
           applications: ['myFirstApp', 'mySecondApp'],
-          microserviceName: 'mySecondApp'
+          microserviceName: 'mySecondApp',
+          secure: {
+            securityType: 'none'
+          }
         },
         {
           name: 'F',
@@ -980,7 +1013,10 @@ relationship OneToOne {
           jpaMetamodelFiltering: false,
           fluentMethods: true,
           clientRootFolder: '',
-          applications: ['myFirstApp', 'myThirdApp']
+          applications: ['myFirstApp', 'myThirdApp'],
+          secure: {
+            securityType: 'none'
+          }
         }
       ];
       let importState;
@@ -1724,7 +1760,10 @@ paginate * with infinite-scroll
           pagination: 'pagination',
           readOnly: false,
           relationships: [],
-          service: 'no'
+          service: 'no',
+          secure: {
+            securityType: 'none'
+          }
         });
         expect(entityB).to.deep.equal({
           applications: ['tata'],
@@ -1740,7 +1779,10 @@ paginate * with infinite-scroll
           pagination: 'infinite-scroll',
           readOnly: false,
           relationships: [],
-          service: 'no'
+          service: 'no',
+          secure: {
+            securityType: 'none'
+          }
         });
         expect(entityCInTata).to.deep.equal({
           applications: ['tata', 'tutu'],
@@ -1756,7 +1798,10 @@ paginate * with infinite-scroll
           pagination: 'pagination',
           readOnly: false,
           relationships: [],
-          service: 'no'
+          service: 'no',
+          secure: {
+            securityType: 'none'
+          }
         });
         expect(entityCInTutu).to.deep.equal({
           applications: ['tata', 'tutu'],
@@ -1772,7 +1817,10 @@ paginate * with infinite-scroll
           pagination: 'pagination',
           readOnly: false,
           relationships: [],
-          service: 'no'
+          service: 'no',
+          secure: {
+            securityType: 'none'
+          }
         });
         expect(entityD).to.deep.equal({
           applications: ['tutu'],
@@ -1788,7 +1836,10 @@ paginate * with infinite-scroll
           pagination: 'infinite-scroll',
           readOnly: false,
           relationships: [],
-          service: 'serviceClass'
+          service: 'serviceClass',
+          secure: {
+            securityType: 'none'
+          }
         });
         expect(entityE).to.deep.equal({
           applications: ['tutu'],
@@ -1804,7 +1855,10 @@ paginate * with infinite-scroll
           pagination: 'infinite-scroll',
           readOnly: false,
           relationships: [],
-          service: 'no'
+          service: 'no',
+          secure: {
+            securityType: 'none'
+          }
         });
       });
       it('should not generate entity not in any app', () => {

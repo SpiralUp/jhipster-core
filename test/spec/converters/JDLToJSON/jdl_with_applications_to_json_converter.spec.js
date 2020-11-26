@@ -161,7 +161,10 @@ describe('JDLWithApplicationsToJSONConverter', () => {
             pagination: 'no',
             readOnly: false,
             relationships: [],
-            service: 'no'
+            service: 'no',
+            secure: {
+              securityType: 'none'
+            }
           });
         });
       });
@@ -272,7 +275,10 @@ describe('JDLWithApplicationsToJSONConverter', () => {
             searchEngine: 'couchbase',
             service: 'serviceImpl',
             skipClient: true,
-            skipServer: true
+            skipServer: true,
+            secure: {
+              securityType: 'none'
+            }
           });
         });
       });
@@ -332,7 +338,10 @@ describe('JDLWithApplicationsToJSONConverter', () => {
             pagination: 'no',
             readOnly: false,
             relationships: [],
-            service: 'serviceClass'
+            service: 'serviceClass',
+            secure: {
+              securityType: 'none'
+            }
           });
         });
       });
@@ -394,7 +403,10 @@ describe('JDLWithApplicationsToJSONConverter', () => {
             pagination: 'no',
             readOnly: false,
             relationships: [],
-            service: 'serviceClass'
+            service: 'serviceClass',
+            secure: {
+              securityType: 'none'
+            }
           });
         });
       });
@@ -447,7 +459,10 @@ describe('JDLWithApplicationsToJSONConverter', () => {
             readOnly: false,
             relationships: [],
             searchEngine: false,
-            service: 'no'
+            service: 'no',
+            secure: {
+              securityType: 'none'
+            }
           });
         });
       });
@@ -511,7 +526,10 @@ describe('JDLWithApplicationsToJSONConverter', () => {
               pagination: 'no',
               readOnly: false,
               relationships: [],
-              service: 'no'
+              service: 'no',
+              secure: {
+                securityType: 'none'
+              }
             });
           });
         });
@@ -596,7 +614,10 @@ describe('JDLWithApplicationsToJSONConverter', () => {
               pagination: 'no',
               readOnly: false,
               relationships: [],
-              service: 'no'
+              service: 'no',
+              secure: {
+                securityType: 'none'
+              }
             });
           });
         });
@@ -652,7 +673,10 @@ describe('JDLWithApplicationsToJSONConverter', () => {
               pagination: 'no',
               readOnly: false,
               relationships: [],
-              service: 'no'
+              service: 'no',
+              secure: {
+                securityType: 'none'
+              }
             });
           });
         });
@@ -708,7 +732,10 @@ describe('JDLWithApplicationsToJSONConverter', () => {
               pagination: 'no',
               readOnly: false,
               relationships: [],
-              service: 'no'
+              service: 'no',
+              secure: {
+                securityType: 'none'
+              }
             });
           });
         });
@@ -837,7 +864,10 @@ describe('JDLWithApplicationsToJSONConverter', () => {
               pagination: 'no',
               readOnly: false,
               relationships: [],
-              service: 'no'
+              service: 'no',
+              secure: {
+                securityType: 'none'
+              }
             });
           });
         });
@@ -899,7 +929,10 @@ describe('JDLWithApplicationsToJSONConverter', () => {
               pagination: 'no',
               readOnly: false,
               relationships: [],
-              service: 'no'
+              service: 'no',
+              secure: {
+                securityType: 'none'
+              }
             });
           });
         });
@@ -1759,7 +1792,10 @@ describe('JDLWithApplicationsToJSONConverter', () => {
               pagination: 'pagination',
               readOnly: false,
               relationships: [],
-              service: 'no'
+              service: 'no',
+              secure: {
+                securityType: 'none'
+              }
             },
             {
               applications: ['tata'],
@@ -1776,7 +1812,10 @@ describe('JDLWithApplicationsToJSONConverter', () => {
               pagination: 'infinite-scroll',
               readOnly: false,
               relationships: [],
-              service: 'no'
+              service: 'no',
+              secure: {
+                securityType: 'none'
+              }
             },
             {
               applications: ['tata', 'tutu'],
@@ -1793,7 +1832,10 @@ describe('JDLWithApplicationsToJSONConverter', () => {
               pagination: 'pagination',
               readOnly: false,
               relationships: [],
-              service: 'no'
+              service: 'no',
+              secure: {
+                securityType: 'none'
+              }
             }
           ]);
           expect(convertedEntitiesForTutuApplication).to.deep.equal([
@@ -1812,7 +1854,10 @@ describe('JDLWithApplicationsToJSONConverter', () => {
               pagination: 'pagination',
               readOnly: false,
               relationships: [],
-              service: 'no'
+              service: 'no',
+              secure: {
+                securityType: 'none'
+              }
             },
             {
               applications: ['tutu'],
@@ -1829,7 +1874,10 @@ describe('JDLWithApplicationsToJSONConverter', () => {
               pagination: 'infinite-scroll',
               readOnly: false,
               relationships: [],
-              service: 'serviceClass'
+              service: 'serviceClass',
+              secure: {
+                securityType: 'none'
+              }
             },
             {
               applications: ['tutu'],
@@ -1846,7 +1894,10 @@ describe('JDLWithApplicationsToJSONConverter', () => {
               pagination: 'infinite-scroll',
               readOnly: false,
               relationships: [],
-              service: 'no'
+              service: 'no',
+              secure: {
+                securityType: 'none'
+              }
             }
           ]);
         });
