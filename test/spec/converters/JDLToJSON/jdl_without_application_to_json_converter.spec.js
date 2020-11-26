@@ -171,7 +171,10 @@ describe('JDLWithoutApplicationToJSONConverter', () => {
             pagination: 'no',
             readOnly: false,
             relationships: [],
-            service: 'no'
+            service: 'no',
+            secure: {
+              securityType: 'none'
+            }
           });
         });
       });
@@ -279,7 +282,10 @@ describe('JDLWithoutApplicationToJSONConverter', () => {
             searchEngine: 'couchbase',
             service: 'serviceImpl',
             skipClient: true,
-            skipServer: true
+            skipServer: true,
+            secure: {
+              securityType: 'none'
+            }
           });
         });
       });
@@ -339,7 +345,10 @@ describe('JDLWithoutApplicationToJSONConverter', () => {
             pagination: 'no',
             readOnly: false,
             relationships: [],
-            service: 'serviceClass'
+            service: 'serviceClass',
+            secure: {
+              securityType: 'none'
+            }
           });
         });
       });
@@ -398,7 +407,10 @@ describe('JDLWithoutApplicationToJSONConverter', () => {
             pagination: 'no',
             readOnly: false,
             relationships: [],
-            service: 'serviceClass'
+            service: 'serviceClass',
+            secure: {
+              securityType: 'none'
+            }
           });
         });
       });
@@ -448,7 +460,10 @@ describe('JDLWithoutApplicationToJSONConverter', () => {
             readOnly: false,
             relationships: [],
             searchEngine: false,
-            service: 'no'
+            service: 'no',
+            secure: {
+              securityType: 'none'
+            }
           });
         });
       });
@@ -509,7 +524,10 @@ describe('JDLWithoutApplicationToJSONConverter', () => {
               pagination: 'no',
               readOnly: false,
               relationships: [],
-              service: 'no'
+              service: 'no',
+              secure: {
+                securityType: 'none'
+              }
             });
           });
         });
@@ -591,7 +609,10 @@ describe('JDLWithoutApplicationToJSONConverter', () => {
               pagination: 'no',
               readOnly: false,
               relationships: [],
-              service: 'no'
+              service: 'no',
+              secure: {
+                securityType: 'none'
+              }
             });
           });
         });
@@ -644,7 +665,10 @@ describe('JDLWithoutApplicationToJSONConverter', () => {
               pagination: 'no',
               readOnly: false,
               relationships: [],
-              service: 'no'
+              service: 'no',
+              secure: {
+                securityType: 'none'
+              }
             });
           });
         });
@@ -697,7 +721,10 @@ describe('JDLWithoutApplicationToJSONConverter', () => {
               pagination: 'no',
               readOnly: false,
               relationships: [],
-              service: 'no'
+              service: 'no',
+              secure: {
+                securityType: 'none'
+              }
             });
           });
         });
@@ -823,7 +850,10 @@ describe('JDLWithoutApplicationToJSONConverter', () => {
               pagination: 'no',
               readOnly: false,
               relationships: [],
-              service: 'no'
+              service: 'no',
+              secure: {
+                securityType: 'none'
+              }
             });
           });
         });
@@ -882,7 +912,10 @@ describe('JDLWithoutApplicationToJSONConverter', () => {
               pagination: 'no',
               readOnly: false,
               relationships: [],
-              service: 'no'
+              service: 'no',
+              secure: {
+                securityType: 'none'
+              }
             });
           });
         });
@@ -1592,6 +1625,238 @@ describe('JDLWithoutApplicationToJSONConverter', () => {
                 relationshipType: 'many-to-many'
               });
             });
+          });
+        });
+      });
+      context('secure with roles', () => {
+        let convertedEntity;
+
+        before(() => {
+          const jdlObject = new JDLObject();
+          const entityA = new JDLEntity({
+            name: 'A',
+            tableName: 'entity_a',
+            comment: 'The best entity',
+            secure: {
+              securityType: 'roles',
+              roles: [
+                {
+                  role: 'ROLE_USER',
+                  actionList: ['GET', 'PUT', 'POST', 'DELETE']
+                }
+              ]
+            }
+          });
+          jdlObject.addEntity(entityA);
+          const returnedMap = convert({
+            jdlObject,
+            applicationName: 'toto',
+            applicationType: MONOLITH,
+            creationTimestamp: new Date(2020, 0, 1, 1, 0, 0),
+            databaseType: SQL
+          });
+          convertedEntity = returnedMap.get('toto')[0];
+        });
+
+        it('should convert the entity', () => {
+          expect(convertedEntity).to.deep.equal({
+            applications: '*',
+            changelogDate: formatDateForLiquibase({ date: new Date(2020, 0, 1, 1, 0, 0), increment: 1 }),
+            clientRootFolder: '',
+            dto: 'no',
+            embedded: false,
+            entityTableName: 'entity_a',
+            fields: [],
+            fluentMethods: true,
+            javadoc: 'The best entity',
+            jpaMetamodelFiltering: false,
+            name: 'A',
+            pagination: 'no',
+            readOnly: false,
+            relationships: [],
+            service: 'no',
+            secure: {
+              securityType: 'roles',
+              roles: [
+                {
+                  role: 'ROLE_USER',
+                  actionList: ['GET', 'PUT', 'POST', 'DELETE']
+                }
+              ]
+            }
+          });
+        });
+      });
+      context('secure with privileges', () => {
+        let convertedEntity;
+
+        before(() => {
+          const jdlObject = new JDLObject();
+          const entityA = new JDLEntity({
+            name: 'A',
+            tableName: 'entity_a',
+            comment: 'The best entity',
+            secure: {
+              securityType: 'privileges',
+              privileges: [
+                {
+                  action: 'read',
+                  privList: ['ENTITY_ALL_R', 'ENTITY_ALL_W']
+                }
+              ]
+            }
+          });
+          jdlObject.addEntity(entityA);
+          const returnedMap = convert({
+            jdlObject,
+            applicationName: 'toto',
+            applicationType: MONOLITH,
+            creationTimestamp: new Date(2020, 0, 1, 1, 0, 0),
+            databaseType: SQL
+          });
+          convertedEntity = returnedMap.get('toto')[0];
+        });
+
+        it('should convert the entity', () => {
+          expect(convertedEntity).to.deep.equal({
+            applications: '*',
+            changelogDate: formatDateForLiquibase({ date: new Date(2020, 0, 1, 1, 0, 0), increment: 1 }),
+            clientRootFolder: '',
+            dto: 'no',
+            embedded: false,
+            entityTableName: 'entity_a',
+            fields: [],
+            fluentMethods: true,
+            javadoc: 'The best entity',
+            jpaMetamodelFiltering: false,
+            name: 'A',
+            pagination: 'no',
+            readOnly: false,
+            relationships: [],
+            service: 'no',
+            secure: {
+              securityType: 'privileges',
+              privileges: [
+                {
+                  action: 'read',
+                  privList: ['ENTITY_ALL_R', 'ENTITY_ALL_W']
+                }
+              ]
+            }
+          });
+        });
+      });
+      context('secure with parent privileges', () => {
+        let convertedEntity;
+
+        before(() => {
+          const jdlObject = new JDLObject();
+          const entityA = new JDLEntity({
+            name: 'A',
+            tableName: 'entity_a',
+            comment: 'The best entity',
+            secure: {
+              securityType: 'parentPrivileges',
+              parentPrivileges: {
+                parent: 'ParentEntity',
+                field: 'parent'
+              }
+            }
+          });
+          jdlObject.addEntity(entityA);
+          const returnedMap = convert({
+            jdlObject,
+            applicationName: 'toto',
+            applicationType: MONOLITH,
+            creationTimestamp: new Date(2020, 0, 1, 1, 0, 0),
+            databaseType: SQL
+          });
+          convertedEntity = returnedMap.get('toto')[0];
+        });
+
+        it('should convert the entity', () => {
+          expect(convertedEntity).to.deep.equal({
+            applications: '*',
+            changelogDate: formatDateForLiquibase({ date: new Date(2020, 0, 1, 1, 0, 0), increment: 1 }),
+            clientRootFolder: '',
+            dto: 'no',
+            embedded: false,
+            entityTableName: 'entity_a',
+            fields: [],
+            fluentMethods: true,
+            javadoc: 'The best entity',
+            jpaMetamodelFiltering: false,
+            name: 'A',
+            pagination: 'no',
+            readOnly: false,
+            relationships: [],
+            service: 'no',
+            secure: {
+              securityType: 'parentPrivileges',
+              parentPrivileges: {
+                parent: 'ParentEntity',
+                field: 'parent'
+              }
+            }
+          });
+        });
+      });
+      context('secure with rel privileges', () => {
+        let convertedEntity;
+
+        before(() => {
+          const jdlObject = new JDLObject();
+          const entityA = new JDLEntity({
+            name: 'A',
+            tableName: 'entity_a',
+            comment: 'The best entity',
+            secure: {
+              securityType: 'relPrivileges',
+              relPrivileges: {
+                fromEntity: 'ParentEntity',
+                fromField: 'rel1',
+                toEntity: 'ParentEntity',
+                toField: 'rel2'
+              }
+            }
+          });
+          jdlObject.addEntity(entityA);
+          const returnedMap = convert({
+            jdlObject,
+            applicationName: 'toto',
+            applicationType: MONOLITH,
+            creationTimestamp: new Date(2020, 0, 1, 1, 0, 0),
+            databaseType: SQL
+          });
+          convertedEntity = returnedMap.get('toto')[0];
+        });
+
+        it('should convert the entity', () => {
+          expect(convertedEntity).to.deep.equal({
+            applications: '*',
+            changelogDate: formatDateForLiquibase({ date: new Date(2020, 0, 1, 1, 0, 0), increment: 1 }),
+            clientRootFolder: '',
+            dto: 'no',
+            embedded: false,
+            entityTableName: 'entity_a',
+            fields: [],
+            fluentMethods: true,
+            javadoc: 'The best entity',
+            jpaMetamodelFiltering: false,
+            name: 'A',
+            pagination: 'no',
+            readOnly: false,
+            relationships: [],
+            service: 'no',
+            secure: {
+              securityType: 'relPrivileges',
+              relPrivileges: {
+                fromEntity: 'ParentEntity',
+                fromField: 'rel1',
+                toEntity: 'ParentEntity',
+                toField: 'rel2'
+              }
+            }
           });
         });
       });
